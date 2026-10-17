@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/team.css">
+    <link rel="stylesheet" href="css/faq.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
@@ -117,7 +118,7 @@
                             <a href="https://www.linkedin.com/in/gull-muhammad-91a56240a/recent-activity/all/" target="_blank" rel="noopener noreferrer" class="team-social-link linkedin" aria-label="LinkedIn - Fazal Hussain">
                                 <i class="fa-brands fa-linkedin-in"></i>
                             </a>
-                            <a href="https://www.facebook.com/share/17hzjd35pn/" target="_blank" rel="noopener noreferrer" class="team-social-link facebook" aria-label="Facebook - Fazal Hussain">
+                            <a href="https://www.facebook.com/FAZALHUSSAIN910/" target="_blank" rel="noopener noreferrer" class="team-social-link facebook" aria-label="Facebook - Fazal Hussain">
                                 <i class="fa-brands fa-facebook-f"></i>
                             </a>
                             <a href="https://github.com/fazalhussain910" target="_blank" rel="noopener noreferrer" class="team-social-link github" aria-label="GitHub - Fazal Hussain">
@@ -227,6 +228,97 @@
                             <a href="https://github.com/mimran210705-ai" target="_blank" rel="noopener noreferrer" class="team-social-link github" aria-label="GitHub - Muhammad Imran">
                                 <i class="fa-brands fa-github"></i>
                             </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Frequently Asked Questions (FAQ) Section -->
+        <section class="faq-section" id="faq">
+            <div class="section-wrapper">
+                <div class="faq-header reveal-on-scroll">
+                    <span class="faq-tag">Got Questions?</span>
+                    <h2 class="faq-title">Frequently Asked Questions</h2>
+                    <p class="faq-subtitle">Everything you need to know about our AI agent, its capabilities, and how it works.</p>
+                </div>
+
+                <div class="faq-container">
+                    <div class="faq-accordion" role="region" aria-label="Frequently Asked Questions Accordion">
+                        <!-- Question 1 -->
+                        <div class="faq-card reveal-on-scroll" data-index="0">
+                            <h3>
+                                <button type="button" class="faq-trigger" id="faq-trigger-1" aria-expanded="false" aria-controls="faq-collapse-1">
+                                    <span class="faq-question-text">Why build with AgenticAim's AI agent?</span>
+                                    <span class="faq-icon-wrapper" aria-hidden="true">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </span>
+                                </button>
+                            </h3>
+                            <div id="faq-collapse-1" class="faq-collapse" role="region" aria-labelledby="faq-trigger-1">
+                                <div class="faq-collapse-inner">
+                                    <div class="faq-answer">
+                                        <p>AgenticAim is purpose-built as an intelligent esports assistant specifically engineered for the competitive shooter <em>Blood Strike</em>. Unlike generic assistants, it combines real-time computer-vision crosshair and flick-path tracking with continuous hardware telemetry monitoring for AMD Ryzen and Radeon systems. By simultaneously analyzing gameplay mechanics and system performance, it delivers immediate, actionable feedback so competitive players can refine their aiming consistency, optimize sensitivity curves, and maintain peak hardware stability during intense matches.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 2 -->
+                        <div class="faq-card reveal-on-scroll" data-index="1">
+                            <h3>
+                                <button type="button" class="faq-trigger" id="faq-trigger-2" aria-expanded="false" aria-controls="faq-collapse-2">
+                                    <span class="faq-question-text">How does the AgenticAim AI agent handle different tasks?</span>
+                                    <span class="faq-icon-wrapper" aria-hidden="true">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </span>
+                                </button>
+                            </h3>
+                            <div id="faq-collapse-2" class="faq-collapse" role="region" aria-labelledby="faq-trigger-2">
+                                <div class="faq-collapse-inner">
+                                    <div class="faq-answer">
+                                        <p>Users interact with the agent through a unified desktop dashboard that supports both interactive manual controls and hands-free voice workflows. The agent features an autonomous neural voice coach that actively detects voice input, visualizes speech via live audio waveforms, and delivers spoken tactical recommendations. Concurrently, the interface provides precision slider calibration for hipfire, ADS, and scoped optics, indexes match history into local SQLite storage, and renders a non-intrusive live telemetry HUD overlay.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 3 -->
+                        <div class="faq-card reveal-on-scroll" data-index="2">
+                            <h3>
+                                <button type="button" class="faq-trigger" id="faq-trigger-3" aria-expanded="false" aria-controls="faq-collapse-3">
+                                    <span class="faq-question-text">Can the AgenticAim AI agent connect to external tools or services?</span>
+                                    <span class="faq-icon-wrapper" aria-hidden="true">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </span>
+                                </button>
+                            </h3>
+                            <div id="faq-collapse-3" class="faq-collapse" role="region" aria-labelledby="faq-trigger-3">
+                                <div class="faq-collapse-inner">
+                                    <div class="faq-answer">
+                                        <p>Yes. The current implementation integrates with a structured local SQLite database for match history indexing, local hardware sensor telemetry APIs for live CPU and GPU thermal and load monitoring, and Qdrant Cloud Vector Database for hybrid RAG (Retrieval-Augmented Generation) situational context. Desktop installer packages and version updates are directly connected to our official GitHub Releases pipeline. Additional third-party gaming platform webhooks remain optional and configurable through local application settings.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Question 4 -->
+                        <div class="faq-card reveal-on-scroll" data-index="3">
+                            <h3>
+                                <button type="button" class="faq-trigger" id="faq-trigger-4" aria-expanded="false" aria-controls="faq-collapse-4">
+                                    <span class="faq-question-text">What do I need to get started with AgenticAim?</span>
+                                    <span class="faq-icon-wrapper" aria-hidden="true">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </span>
+                                </button>
+                            </h3>
+                            <div id="faq-collapse-4" class="faq-collapse" role="region" aria-labelledby="faq-trigger-4">
+                                <div class="faq-collapse-inner">
+                                    <div class="faq-answer">
+                                        <p>Getting started is quick and straightforward. Download the official <code>AgenticAim_v1.0_Windows.zip</code> distribution from our Services section or GitHub Releases repository, extract the archive on a Windows 10 or 11 (64-bit) computer, and run the executable. Make sure your microphone is enabled so the neural voice coach can detect voice commands, and configure <em>Blood Strike</em> to run in windowed or borderless display mode so the telemetry advisor and crosshair tracker can display smoothly without interfering with gameplay.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

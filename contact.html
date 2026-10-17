@@ -52,15 +52,16 @@
         }
         .contact-item {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 14px;
-            margin-bottom: 18px;
-            font-size: 15.5px;
+            margin-bottom: 22px;
+            font-size: 15px;
             color: #1e293b;
         }
         .contact-item i {
             width: 40px;
             height: 40px;
+            min-width: 40px;
             border-radius: 10px;
             background: rgba(139, 61, 255, 0.1);
             color: #8b3dff;
@@ -68,12 +69,30 @@
             align-items: center;
             justify-content: center;
             font-size: 17px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+        .contact-label {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .contact-link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
         .contact-item a {
             color: #000d3c;
             text-decoration: none;
             font-weight: 600;
+            font-size: 14.5px;
+            line-height: 1.45;
             transition: color 0.2s ease;
+            word-break: break-word;
         }
         .contact-item a:hover {
             color: #8b3dff;
@@ -115,13 +134,33 @@
             resize: vertical;
         }
         .form-feedback {
-            margin-top: 14px;
-            font-size: 14px;
+            margin-top: 16px;
+            font-size: 14.5px;
             min-height: 20px;
             font-weight: 500;
+            line-height: 1.5;
+            padding: 0;
+            border-radius: 8px;
+            transition: all 0.3s ease;
         }
-        .form-feedback.success { color: #16a34a; }
-        .form-feedback.error { color: #dc2626; }
+        .form-feedback.success {
+            color: #15803d;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            padding: 12px 16px;
+        }
+        .form-feedback.error {
+            color: #b91c1c;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            padding: 12px 16px;
+        }
+        #contact-submit-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            pointer-events: none;
+            box-shadow: none;
+        }
         @media (max-width: 860px) {
             .contact-grid {
                 grid-template-columns: 1fr;
@@ -169,24 +208,38 @@
                         <div class="contact-item">
                             <i class="fa-solid fa-envelope"></i>
                             <div>
-                                <div style="font-size: 12px; color: #64748b;">Direct Email</div>
-                                <a href="mailto:sabzada786901@gmail.com">sabzada786901@gmail.com</a>
+                                <div class="contact-label">Direct Email</div>
+                                <div class="contact-link-list">
+                                    <a href="mailto:sabzada786901@gmail.com">sabzada786901@gmail.com</a>
+                                    <a href="mailto:arsalmujeeb04@gmail.com">arsalmujeeb04@gmail.com</a>
+                                    <a href="mailto:hu8843555@gmail.com">hu8843555@gmail.com</a>
+                                    <a href="mailto:mimran210705@gmail.com">mimran210705@gmail.com</a>
+                                    <a href="mailto:muhammadbinusman25786@gmail.com">muhammadbinusman25786@gmail.com</a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="contact-item">
                             <i class="fa-solid fa-phone"></i>
                             <div>
-                                <div style="font-size: 12px; color: #64748b;">Official Phone</div>
-                                <a href="tel:+923288394863">+92 328 8394863</a>
+                                <div class="contact-label">Official Phone</div>
+                                <div class="contact-link-list">
+                                    <a href="tel:+923288394863">+92 328 8394863</a>
+                                    <a href="tel:+923227783500">+92 322 7783500</a>
+                                    <a href="tel:+923410646078">+92 341 0646078</a>
+                                    <a href="tel:+923216615451">+92 321 6615451</a>
+                                    <a href="tel:+923107703043">+92 310 7703043</a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="contact-item">
                             <i class="fa-brands fa-whatsapp"></i>
                             <div>
-                                <div style="font-size: 12px; color: #64748b;">WhatsApp Collaboration</div>
-                                <a href="https://wa.me/923288394863" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+                                <div class="contact-label">WhatsApp Collaboration</div>
+                                <div class="contact-link-list">
+                                    <a href="https://wa.me/923288394863" target="_blank" rel="noopener noreferrer">Chat on WhatsApp</a>
+                                </div>
                             </div>
                         </div>
 
@@ -200,24 +253,30 @@
                     <div class="contact-form-card">
                         <h3 style="font-size: 22px; font-weight: 700; color: #000d3c; margin-bottom: 20px;">Send a Message</h3>
                         <form id="contact-page-form" novalidate>
+                            <!-- Honeypot anti-spam field (hidden from real users) -->
+                            <div style="display: none !important; visibility: hidden !important; position: absolute; left: -9999px;" aria-hidden="true">
+                                <label for="contact-website">Leave this field blank</label>
+                                <input type="text" id="contact-website" name="website" tabindex="-1" autocomplete="off" />
+                            </div>
+
                             <div class="form-group">
-                                <label for="contact-name">Your Full Name</label>
-                                <input type="text" id="contact-name" class="form-control" placeholder="e.g. John Doe" required />
+                                <label for="contact-name">Your Full Name <span style="color: #8b3dff;">*</span></label>
+                                <input type="text" id="contact-name" name="name" class="form-control" placeholder="e.g. John Doe" maxlength="100" required />
                             </div>
                             <div class="form-group">
-                                <label for="contact-email">Your Email Address</label>
-                                <input type="email" id="contact-email" class="form-control" placeholder="e.g. john@example.com" required />
+                                <label for="contact-email">Your Email Address <span style="color: #8b3dff;">*</span></label>
+                                <input type="email" id="contact-email" name="email" class="form-control" placeholder="e.g. john@example.com" maxlength="254" required />
                             </div>
                             <div class="form-group">
-                                <label for="contact-subject">Subject</label>
-                                <input type="text" id="contact-subject" class="form-control" placeholder="AI Agent Inquiry / Collaboration" required />
+                                <label for="contact-subject">Subject <span style="color: #8b3dff;">*</span></label>
+                                <input type="text" id="contact-subject" name="subject" class="form-control" placeholder="AI Agent Inquiry / Collaboration" maxlength="150" required />
                             </div>
                             <div class="form-group">
-                                <label for="contact-message">Message</label>
-                                <textarea id="contact-message" class="form-control" placeholder="Write your message here..." required></textarea>
+                                <label for="contact-message">Message <span style="color: #8b3dff;">*</span></label>
+                                <textarea id="contact-message" name="message" class="form-control" rows="5" placeholder="Write your message here..." maxlength="5000" required></textarea>
                             </div>
-                            <button type="submit" class="btn-primary" style="width: 100%;">
-                                <i class="fa-solid fa-paper-plane"></i> Send Message
+                            <button type="submit" id="contact-submit-btn" class="btn-primary" style="width: 100%;">
+                                <i class="fa-solid fa-paper-plane"></i> <span class="btn-text">Send Message</span>
                             </button>
                             <div id="contact-feedback" class="form-feedback" aria-live="polite"></div>
                         </form>
