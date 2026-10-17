@@ -6,6 +6,7 @@
 
 require('dotenv').config();
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
@@ -364,7 +365,116 @@ ${rawMessage}
         console.error('[SENDMAIL ERROR] Failed to send email:', err);
         return res.status(500).json({
             success: false,
-            error: 'Your message could not be sent right now. Please try again shortly.'
+            error: err.message ? `Email delivery failed: ${err.message}` : 'Your message could not be sent right now. Please try again shortly.'
+        });
+    }
+});
+
+// Newsletter Subscription Endpoint
+app.post('/api/subscribe', contactLimiter, async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                error: 'Please enter an email address.'
+            });
+        }
+
+        const rawEmail = String(email).trim().toLowerCase();
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+
+        if (rawEmail.length < 5 || rawEmail.length > 254 || !emailRegex.test(rawEmail)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Please provide a valid email address.'
+            });
+        }
+
+        const cleanEmail = stripHeaderBreaks(rawEmail);
+        const submissionDate = new Date().toUTCString();
+        const clientIp = req.ip || req.connection.remoteAddress || 'Unknown';
+
+        // 1. Save subscriber email to subscribers.json
+        try {
+            const subFilePath = path.join(__dirname, 'subscribers.json');
+            let subscribers = [];
+            if (fs.existsSync(subFilePath)) {
+                try {
+                    subscribers = JSON.parse(fs.readFileSync(subFilePath, 'utf8'));
+                    if (!Array.isArray(subscribers)) subscribers = [];
+                } catch (e) {
+                    subscribers = [];
+                }
+            }
+
+            const exists = subscribers.some(s => s.email === cleanEmail);
+            if (!exists) {
+                subscribers.push({
+                    email: cleanEmail,
+                    date: submissionDate,
+                    ip: clientIp
+                });
+                fs.writeFileSync(subFilePath, JSON.stringify(subscribers, null, 2), 'utf8');
+                console.log(`[SUBSCRIBER SAVED] Added ${cleanEmail} to subscribers.json`);
+            } else {
+                console.log(`[SUBSCRIBER EXISTS] ${cleanEmail} is already subscribed.`);
+            }
+        } catch (fileErr) {
+            console.warn('[SUBSCRIBE WARNING] Could not persist to subscribers.json:', fileErr.message);
+        }
+
+        // 2. Send email notification to site owner
+        if (isSmtpConfigured && transporter) {
+            try {
+                const smtpUser = (process.env.SMTP_USER || '').trim();
+                const fromAddress = (process.env.SMTP_HOST || '').includes('gmail')
+                    ? `"AgenticAim Newsletter" <${smtpUser}>`
+                    : (process.env.SMTP_FROM || `"AgenticAim Newsletter" <${smtpUser || 'noreply@agenticaim.com'}>`);
+
+                const mailOptions = {
+                    from: fromAddress,
+                    to: RECIPIENT_EMAIL,
+                    replyTo: cleanEmail,
+                    subject: `New Newsletter Subscriber — AgenticAim: ${cleanEmail}`,
+                    text: `New subscriber joined AgenticAim newsletter:\n\nEmail: ${cleanEmail}\nDate: ${submissionDate}\nClient IP: ${clientIp}`,
+                    html: `
+                        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; padding: 24px; background: #f8fafc; border-radius: 10px; max-width: 500px; margin: 0 auto; border: 1px solid #e2e8f0;">
+                            <h3 style="color: #000d3c; margin-top: 0; font-size: 20px;">New Newsletter Subscription</h3>
+                            <p style="color: #475569; font-size: 14px;">A new visitor has subscribed to AgenticAim updates:</p>
+                            <table style="width: 100%; border-collapse: collapse; margin-top: 14px; background: #ffffff; border-radius: 6px; overflow: hidden; border: 1px solid #edf2f7;">
+                                <tr>
+                                    <td style="padding: 10px 14px; font-weight: 600; color: #64748b; border-bottom: 1px solid #edf2f7; width: 100px;">Email:</td>
+                                    <td style="padding: 10px 14px; font-weight: 600; color: #8b3dff; border-bottom: 1px solid #edf2f7;"><a href="mailto:${escapeHtml(cleanEmail)}" style="color: #8b3dff; text-decoration: none;">${escapeHtml(cleanEmail)}</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 14px; font-weight: 600; color: #64748b; width: 100px;">Date:</td>
+                                    <td style="padding: 10px 14px; color: #1e293b;">${escapeHtml(submissionDate)}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    `.trim()
+                };
+
+                await transporter.sendMail(mailOptions);
+                console.log(`[NEWSLETTER NOTIFIED] Sent subscriber notice for ${cleanEmail} to ${RECIPIENT_EMAIL}`);
+            } catch (mailErr) {
+                console.error('[SUBSCRIBE MAIL NOTICE ERROR]', mailErr.message);
+                // Do not fail the user subscription response if notification email fails
+            }
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Thank you for subscribing! You will receive our latest updates.'
+        });
+
+    } catch (err) {
+        console.error('[SUBSCRIBE ERROR]', err);
+        return res.status(500).json({
+            success: false,
+            error: 'Subscription could not be processed right now. Please try again shortly.'
         });
     }
 });

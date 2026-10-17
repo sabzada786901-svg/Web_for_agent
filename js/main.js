@@ -4,7 +4,7 @@
  */
 
 (function () {
-    // Newsletter Form Validation (Footer)
+    // Newsletter Form Full-Stack Submission (Footer)
     function initNewsletter() {
         const form = document.getElementById('newsletter-form');
         const emailInput = document.getElementById('newsletter-email');
@@ -14,10 +14,14 @@
             return;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const submitBtn = form.querySelector('.newsletter-btn');
+        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$/;
+        let isSubmitting = false;
 
-        form.addEventListener('submit', function (e) {
+        form.addEventListener('submit', async function (e) {
             e.preventDefault();
+            if (isSubmitting) return;
+
             const value = emailInput.value.trim();
 
             if (!value) {
@@ -34,16 +38,109 @@
                 return;
             }
 
-            feedback.textContent = 'Email format validated! (Demo mode: no backend connected).';
-            feedback.className = 'newsletter-feedback success';
-            emailInput.value = '';
+            // Set loading state
+            isSubmitting = true;
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+            }
+            feedback.textContent = '';
+            feedback.className = 'newsletter-feedback';
 
-            setTimeout(function () {
-                if (feedback.classList.contains('success')) {
-                    feedback.textContent = '';
-                    feedback.className = 'newsletter-feedback';
+            try {
+                const endpointsToTry = [];
+                if (window.AGENTICAIM_SUBSCRIBE_URL) {
+                    endpointsToTry.push(window.AGENTICAIM_SUBSCRIBE_URL);
+                } else if (window.location.port === '3000') {
+                    endpointsToTry.push('/api/subscribe');
+                } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+                    endpointsToTry.push('http://localhost:3000/api/subscribe');
+                    if (window.location.protocol !== 'file:') {
+                        endpointsToTry.push('/api/subscribe');
+                    }
+                } else {
+                    endpointsToTry.push('/api/subscribe');
+                    endpointsToTry.push('http://localhost:3000/api/subscribe');
                 }
-            }, 5000);
+
+                let lastError = null;
+                let successData = null;
+
+                for (const endpoint of endpointsToTry) {
+                    try {
+                        const response = await fetch(endpoint, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({ email: value })
+                        });
+
+                        const data = await response.json().catch(() => null);
+
+                        if (response.ok && data && data.success) {
+                            successData = data;
+                            break;
+                        } else if (data && data.error) {
+                            lastError = data.error;
+                            break;
+                        } else if (response.status === 404 && endpointsToTry.length > 1) {
+                            continue;
+                        } else {
+                            lastError = (data && data.error) ? data.error : 'Subscription failed. Please try again.';
+                        }
+                    } catch (err) {
+                        lastError = 'Unable to connect to server. Please try again.';
+                    }
+                }
+
+                // Netlify Forms Fallback for newsletter on deployed website
+                if (!successData && window.location.protocol.startsWith('http') && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    try {
+                        const netlifyFormData = new URLSearchParams();
+                        netlifyFormData.append('form-name', 'newsletter');
+                        netlifyFormData.append('email', value);
+
+                        const netlifyRes = await fetch('/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: netlifyFormData.toString()
+                        });
+
+                        if (netlifyRes.ok) {
+                            successData = { success: true };
+                        }
+                    } catch (nfErr) {
+                        console.warn('Netlify newsletter fallback failed:', nfErr);
+                    }
+                }
+
+                if (successData) {
+                    feedback.textContent = successData.message || 'Thank you for subscribing! You will receive our latest updates.';
+                    feedback.className = 'newsletter-feedback success';
+                    emailInput.value = '';
+
+                    setTimeout(function () {
+                        if (feedback.classList.contains('success')) {
+                            feedback.textContent = '';
+                            feedback.className = 'newsletter-feedback';
+                        }
+                    }, 6000);
+                } else {
+                    feedback.textContent = lastError || 'Subscription could not be processed. Please try again.';
+                    feedback.className = 'newsletter-feedback error';
+                }
+            } catch (err) {
+                feedback.textContent = 'Subscription could not be processed. Please try again.';
+                feedback.className = 'newsletter-feedback error';
+            } finally {
+                isSubmitting = false;
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+                }
+            }
         });
 
         emailInput.addEventListener('input', function () {
@@ -152,55 +249,102 @@
             feedback.className = 'form-feedback';
 
             try {
-                // Determine API endpoint (smart fallback for file:// and localhost)
-                let apiEndpoint = window.AGENTICAIM_API_URL;
-                if (!apiEndpoint) {
-                    if (window.location.protocol === 'file:') {
-                        apiEndpoint = 'http://localhost:3000/api/contact';
-                    } else {
-                        apiEndpoint = '/api/contact';
+                // Smart API endpoint resolution:
+                // If running on local static servers (like port 8000, 5500, etc.) or file://, target http://localhost:3000/api/contact
+                // If running on backend (port 3000) or production domain, target /api/contact with fallback to http://localhost:3000
+                const endpointsToTry = [];
+                if (window.AGENTICAIM_API_URL) {
+                    endpointsToTry.push(window.AGENTICAIM_API_URL);
+                } else if (window.location.port === '3000') {
+                    endpointsToTry.push('/api/contact');
+                } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
+                    endpointsToTry.push('http://localhost:3000/api/contact');
+                    if (window.location.protocol !== 'file:') {
+                        endpointsToTry.push('/api/contact');
+                    }
+                } else {
+                    endpointsToTry.push('/api/contact');
+                    endpointsToTry.push('http://localhost:3000/api/contact');
+                }
+
+                let lastError = null;
+                let successData = null;
+
+                for (const endpoint of endpointsToTry) {
+                    try {
+                        const response = await fetch(endpoint, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                name,
+                                email,
+                                subject,
+                                message,
+                                website
+                            })
+                        });
+
+                        const data = await response.json().catch(() => null);
+
+                        if (response.ok && data && data.success) {
+                            successData = data;
+                            break;
+                        } else if (data && data.error) {
+                            lastError = data.error;
+                            break;
+                        } else if (response.status === 404 && endpointsToTry.length > 1) {
+                            // If this dev server doesn't host /api/contact, try next endpoint
+                            continue;
+                        } else {
+                            lastError = (data && data.error) 
+                                ? data.error 
+                                : 'Your message could not be sent right now. Please try again shortly.';
+                        }
+                    } catch (err) {
+                        console.warn(`Attempt to send to ${endpoint} failed:`, err);
+                        lastError = 'Unable to connect to the backend server. Please make sure the server is running on http://localhost:3000.';
                     }
                 }
 
-                const response = await fetch(apiEndpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        name,
-                        email,
-                        subject,
-                        message,
-                        website
-                    })
-                });
+                // Netlify Forms Fallback for deployed website
+                if (!successData && window.location.protocol.startsWith('http') && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    try {
+                        const netlifyFormData = new URLSearchParams();
+                        netlifyFormData.append('form-name', 'contact');
+                        netlifyFormData.append('name', name);
+                        netlifyFormData.append('email', email);
+                        netlifyFormData.append('subject', subject);
+                        netlifyFormData.append('message', message);
+                        if (website) netlifyFormData.append('website', website);
 
-                const data = await response.json().catch(() => null);
+                        const netlifyRes = await fetch('/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: netlifyFormData.toString()
+                        });
 
-                if (response.ok && data && data.success) {
-                    // Success: show designated message and reset form fields
+                        if (netlifyRes.ok) {
+                            successData = { success: true };
+                        }
+                    } catch (nfErr) {
+                        console.warn('Netlify form fallback attempt failed:', nfErr);
+                    }
+                }
+
+                if (successData) {
                     feedback.textContent = 'Thank you for contacting AgenticAim! Your message has been sent successfully. We will get back to you as soon as possible.';
                     feedback.className = 'form-feedback success';
                     contactForm.reset();
                 } else {
-                    // Failure: display error and PRESERVE entered input values
-                    const errorMsg = (data && data.error) 
-                        ? data.error 
-                        : 'Your message could not be sent right now. Please try again shortly.';
-                    feedback.textContent = errorMsg;
+                    feedback.textContent = lastError || 'Your message could not be sent right now. Please try again shortly.';
                     feedback.className = 'form-feedback error';
                 }
             } catch (err) {
-                // Network or connection failure: preserve inputs
                 console.error('Contact submission error:', err);
-                const isConnectionRefused = window.location.protocol === 'file:' || err.name === 'TypeError';
-                if (isConnectionRefused) {
-                    feedback.textContent = 'Unable to connect to the backend server. Please make sure the server is running (run "npm start" in terminal).';
-                } else {
-                    feedback.textContent = 'Your message could not be sent right now. Please try again shortly.';
-                }
+                feedback.textContent = 'Unable to connect to the backend server. Please make sure the server is running on http://localhost:3000.';
                 feedback.className = 'form-feedback error';
             } finally {
                 // Restore button state

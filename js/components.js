@@ -96,7 +96,7 @@
                 <!-- Column 3: Social links -->
                 <div class="footer-col col-social">
                     <h3>Social links<div class="underline"><span></span></div></h3>
-                    <form class="newsletter-form" id="newsletter-form" novalidate>
+                    <form class="newsletter-form" id="newsletter-form" name="newsletter" method="POST" data-netlify="true" novalidate>
                         <i class="fa-regular fa-envelope newsletter-icon"></i>
                         <input type="email" id="newsletter-email" class="newsletter-input" placeholder="Enter your email id" required autocomplete="email" />
                         <button type="submit" class="newsletter-btn" aria-label="Submit newsletter subscription">
@@ -109,13 +109,13 @@
                         <a href="https://wa.me/923288394863" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="WhatsApp">
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
-                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Facebook">
+                        <a href="https://www.facebook.com/share/17hzjd35pn/" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="Facebook">
                             <i class="fa-brands fa-facebook-f"></i>
                         </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="LinkedIn">
+                        <a href="https://www.linkedin.com/in/gull-muhammad-91a56240a/recent-activity/all/" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="LinkedIn">
                             <i class="fa-brands fa-linkedin-in"></i>
                         </a>
-                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="GitHub">
+                        <a href="https://github.com/sabzada786901-svg" target="_blank" rel="noopener noreferrer" class="social-circle" aria-label="GitHub">
                             <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
