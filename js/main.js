@@ -48,19 +48,23 @@
             feedback.className = 'newsletter-feedback';
 
             try {
+                // Production-ready POST endpoint resolution
+                const postUrl = form.getAttribute('action') || '/api/subscribe';
                 const endpointsToTry = [];
+
                 if (window.AGENTICAIM_SUBSCRIBE_URL) {
                     endpointsToTry.push(window.AGENTICAIM_SUBSCRIBE_URL);
+                } else if (window.location.protocol !== 'file:' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                    // Deployed production environment: direct relative POST
+                    endpointsToTry.push(postUrl);
                 } else if (window.location.port === '3000') {
-                    endpointsToTry.push('/api/subscribe');
-                } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
-                    endpointsToTry.push('http://localhost:3000/api/subscribe');
-                    if (window.location.protocol !== 'file:') {
-                        endpointsToTry.push('/api/subscribe');
-                    }
+                    endpointsToTry.push(postUrl);
                 } else {
-                    endpointsToTry.push('/api/subscribe');
-                    endpointsToTry.push('http://localhost:3000/api/subscribe');
+                    // Local dev environment: try localhost:3000 then relative
+                    endpointsToTry.push('http://localhost:3000' + postUrl);
+                    if (window.location.protocol !== 'file:') {
+                        endpointsToTry.push(postUrl);
+                    }
                 }
 
                 let lastError = null;
@@ -228,22 +232,24 @@
             feedback.className = 'form-feedback';
 
             try {
-                // Smart API endpoint resolution:
-                // If running on local static servers (like port 8000, 5500, etc.) or file://, target http://localhost:3000/api/contact
-                // If running on backend (port 3000) or production domain, target /api/contact with fallback to http://localhost:3000
+                // Production-ready POST endpoint resolution
+                const postUrl = contactForm.getAttribute('action') || '/api/contact';
+                const isLocalDev = window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
                 const endpointsToTry = [];
+
                 if (window.AGENTICAIM_API_URL) {
                     endpointsToTry.push(window.AGENTICAIM_API_URL);
+                } else if (!isLocalDev) {
+                    // Deployed production environment: direct relative POST
+                    endpointsToTry.push(postUrl);
                 } else if (window.location.port === '3000') {
-                    endpointsToTry.push('/api/contact');
-                } else if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:') {
-                    endpointsToTry.push('http://localhost:3000/api/contact');
-                    if (window.location.protocol !== 'file:') {
-                        endpointsToTry.push('/api/contact');
-                    }
+                    endpointsToTry.push(postUrl);
                 } else {
-                    endpointsToTry.push('/api/contact');
-                    endpointsToTry.push('http://localhost:3000/api/contact');
+                    // Local dev environment: try localhost:3000 then relative
+                    endpointsToTry.push('http://localhost:3000' + postUrl);
+                    if (window.location.protocol !== 'file:') {
+                        endpointsToTry.push(postUrl);
+                    }
                 }
 
                 let lastError = null;
@@ -275,7 +281,6 @@
                             lastError = data.error;
                             break;
                         } else if (response.status === 404 && endpointsToTry.length > 1) {
-                            // If this dev server doesn't host /api/contact, try next endpoint
                             continue;
                         } else {
                             lastError = (data && data.error) 
@@ -284,7 +289,9 @@
                         }
                     } catch (err) {
                         console.warn(`Attempt to send to ${endpoint} failed:`, err);
-                        lastError = 'Unable to connect to the backend server. Please make sure the server is running on http://localhost:3000.';
+                        lastError = isLocalDev 
+                            ? 'Unable to connect to the backend server. Please make sure the server is running on http://localhost:3000.'
+                            : 'Unable to connect to the server. Please check your internet connection and try again.';
                     }
                 }
 
@@ -298,7 +305,10 @@
                 }
             } catch (err) {
                 console.error('Contact submission error:', err);
-                feedback.textContent = 'Unable to connect to the backend server. Please make sure the server is running on http://localhost:3000.';
+                const isLocalDev = window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                feedback.textContent = isLocalDev
+                    ? 'Unable to connect to the backend server. Please make sure the server is running on http://localhost:3000.'
+                    : 'Unable to connect to the server. Please check your connection and try again.';
                 feedback.className = 'form-feedback error';
             } finally {
                 // Restore button state

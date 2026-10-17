@@ -96,7 +96,7 @@
                 <!-- Column 3: Social links -->
                 <div class="footer-col col-social">
                     <h3>Social links<div class="underline"><span></span></div></h3>
-                    <form class="newsletter-form" id="newsletter-form" novalidate>
+                    <form class="newsletter-form" id="newsletter-form" action="/api/subscribe" method="POST" novalidate>
                         <i class="fa-regular fa-envelope newsletter-icon"></i>
                         <input type="email" id="newsletter-email" class="newsletter-input" placeholder="Enter your email id" required autocomplete="email" />
                         <button type="submit" class="newsletter-btn" aria-label="Submit newsletter subscription">
