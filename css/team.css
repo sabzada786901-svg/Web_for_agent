@@ -1,0 +1,397 @@
+/* ========================================================
+   Hero Section & Team Section Styles — AgenticAim
+   ======================================================== */
+
+/* Hero Section */
+.hero-section {
+    padding: 70px 0 80px;
+    background: radial-gradient(circle at 50% 10%, rgba(139, 61, 255, 0.06) 0%, rgba(255, 255, 255, 1) 70%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 18px;
+    border-radius: var(--radius-full);
+    background: rgba(139, 61, 255, 0.08);
+    border: 1px solid rgba(139, 61, 255, 0.2);
+    color: var(--color-primary-dark);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.hero-badge i {
+    color: var(--color-primary);
+}
+
+.hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.18;
+    color: var(--color-dark-navy);
+    letter-spacing: -1.2px;
+    margin-bottom: 20px;
+}
+
+.hero-description {
+    font-size: 18px;
+    line-height: 1.68;
+    color: var(--color-text-muted);
+    max-width: 780px;
+    margin: 0 auto 36px;
+    font-weight: 400;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 50px;
+}
+
+/* Agent Frontend Showcase Card */
+.agent-showcase {
+    max-width: 1060px;
+    margin: 0 auto;
+    background: #0d111e;
+    border-radius: 18px;
+    border: 1px solid rgba(139, 61, 255, 0.25);
+    box-shadow: 0 20px 50px rgba(0, 13, 60, 0.16), 0 0 30px rgba(139, 61, 255, 0.12);
+    overflow: hidden;
+    position: relative;
+}
+
+.showcase-header {
+    background: #090c15;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.showcase-dots {
+    display: flex;
+    gap: 7px;
+}
+
+.showcase-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+}
+
+.showcase-dot.red { background: #ff5f56; }
+.showcase-dot.yellow { background: #ffbd2e; }
+.showcase-dot.green { background: #27c93f; }
+
+.showcase-title-bar {
+    color: #cbd5e1;
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.showcase-status {
+    color: #4ade80;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.showcase-body {
+    position: relative;
+    background: #05070d;
+}
+
+.showcase-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.showcase-footer {
+    padding: 20px 24px;
+    background: linear-gradient(180deg, rgba(9, 12, 21, 0.95), #090c15);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.showcase-info {
+    flex: 1 1 500px;
+}
+
+.showcase-info-heading {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.showcase-info-heading i {
+    color: #a855f7;
+}
+
+.showcase-info-text {
+    color: #94a3b8;
+    font-size: 13.5px;
+    line-height: 1.5;
+}
+
+.showcase-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech-badge {
+    background: rgba(139, 61, 255, 0.15);
+    color: #d8b4fe;
+    border: 1px solid rgba(139, 61, 255, 0.3);
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ========================================================
+   Team Section Styles
+   ======================================================== */
+.team-section {
+    padding: 90px 0 110px;
+    background: var(--color-bg-light);
+    position: relative;
+    border-top: 1px solid rgba(0, 13, 60, 0.05);
+    scroll-margin-top: 80px;
+}
+
+.section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 55px;
+}
+
+.section-tag {
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.section-title {
+    font-size: 38px;
+    font-weight: 800;
+    color: var(--color-dark-navy);
+    letter-spacing: -0.8px;
+    margin-bottom: 14px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--color-primary-gradient);
+    border-radius: 2px;
+    margin: 10px auto 0;
+}
+
+.section-subtitle {
+    font-size: 16.5px;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin-top: 14px;
+}
+
+/* Team Grid — 5 Professional Profile Cards */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+    align-items: stretch;
+}
+
+/* Team Profile Card */
+.team-card {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px 18px 24px;
+    box-shadow: 0 4px 18px rgba(0, 13, 60, 0.05);
+    border: 1px solid rgba(0, 13, 60, 0.06);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s ease;
+    position: relative;
+}
+
+.team-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 36px rgba(139, 61, 255, 0.14), 0 4px 12px rgba(0, 13, 60, 0.06);
+    border-color: rgba(139, 61, 255, 0.3);
+}
+
+/* Avatar Circle */
+.card-avatar-wrapper {
+    width: 116px;
+    height: 116px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, rgba(139, 61, 255, 0.6), rgba(0, 13, 60, 0.3));
+    box-shadow: 0 6px 18px rgba(0, 13, 60, 0.1);
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .card-avatar-wrapper {
+    transform: scale(1.04);
+}
+
+.team-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    background: #e2e8f0;
+    border: 2px solid #ffffff;
+}
+
+/* Member Name */
+.team-name {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--color-dark-navy);
+    margin-bottom: 10px;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+}
+
+/* Specializations / Roles */
+.team-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 22px;
+    width: 100%;
+}
+
+.role-badge {
+    background: #f1f3f9;
+    color: #334155;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 6px;
+    display: block;
+    line-height: 1.35;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.team-card:hover .role-badge {
+    background: #f3edff;
+    color: #6d28d9;
+}
+
+/* Social Media Icons */
+.team-socials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0, 13, 60, 0.06);
+    width: 100%;
+}
+
+.team-social-link {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f8f9fd;
+    border: 1px solid rgba(0, 13, 60, 0.08);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    font-size: 15px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.team-social-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.team-social-link:hover {
+    transform: translateY(-3px) scale(1.08);
+}
+
+/* Specific platform brand hover styling */
+.team-social-link.whatsapp:hover {
+    background: #25d366;
+    color: #ffffff;
+    border-color: #25d366;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.35);
+}
+
+.team-social-link.linkedin:hover {
+    background: #0a66c2;
+    color: #ffffff;
+    border-color: #0a66c2;
+    box-shadow: 0 4px 12px rgba(10, 102, 194, 0.35);
+}
+
+.team-social-link.facebook:hover {
+    background: #1877f2;
+    color: #ffffff;
+    border-color: #1877f2;
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.35);
+}
+
+.team-social-link.github:hover {
+    background: #181717;
+    color: #ffffff;
+    border-color: #181717;
+    box-shadow: 0 4px 12px rgba(24, 23, 23, 0.35);
+}

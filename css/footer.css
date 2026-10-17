@@ -1,0 +1,314 @@
+/* ========================================================
+   Exact Footer Styling — AgenticAim
+   ======================================================== */
+
+footer {
+    flex-shrink: 0;
+    width: 100%;
+    margin-top: auto;
+    background: linear-gradient(to right, #000d3c, #2d0b00);
+    border-top-left-radius: 120px;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-sizing: border-box;
+    color: #ffffff;
+    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 36px 0 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Footer Content Container */
+.foot {
+    width: 85%;
+    max-width: 1240px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 28px 24px;
+}
+
+/* Three Columns with balanced distribution */
+.footer-col {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.col-contact {
+    flex: 0 1 36%;
+    max-width: 380px;
+    min-width: 250px;
+}
+
+.col-links {
+    flex: 0 1 20%;
+    min-width: 160px;
+}
+
+.col-social {
+    flex: 0 1 34%;
+    max-width: 360px;
+    min-width: 250px;
+}
+
+/* Heading and Animated Underline */
+.footer-col h3 {
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 20px 0;
+    line-height: 1.25;
+    letter-spacing: -0.2px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.underline {
+    width: 36%;
+    min-width: 55px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    position: absolute;
+    top: 28px;
+    left: 0;
+    overflow: hidden;
+}
+
+.underline span {
+    width: 18px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    border-radius: 3px;
+    background: #ffffff;
+    animation: moving 3s infinite;
+}
+
+@keyframes moving {
+    0% {
+        left: 0;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+/* Column 1 — Contact us */
+.contact-desc {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: rgba(255, 255, 255, 0.82);
+    margin: 0 0 12px 0;
+    word-break: normal;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-email {
+    display: inline-block;
+    color: #ffffff;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: underline;
+    margin-bottom: 6px;
+    transition: color 0.25s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-email:hover {
+    color: #c084fc;
+}
+
+.footer-phone {
+    display: block;
+    color: #ffffff;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.25s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-phone:hover {
+    color: #c084fc;
+}
+
+/* Column 2 — links */
+.footer-links-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.footer-links-list li a {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    display: inline-block;
+    transition: color 0.25s ease, transform 0.25s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.footer-links-list li a:hover {
+    color: #ffffff;
+    transform: translateX(3px);
+}
+
+/* Column 3 — Social links */
+.newsletter-form {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    padding-bottom: 7px;
+    margin-top: 14px;
+    margin-bottom: 6px;
+    position: relative;
+    width: 100%;
+    max-width: 320px;
+    transition: border-color 0.25s ease;
+}
+
+.newsletter-form:focus-within {
+    border-bottom-color: #8b3dff;
+}
+
+.newsletter-icon {
+    color: #ffffff;
+    font-size: 15px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.newsletter-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13.5px;
+    width: 100%;
+    padding: 2px 0;
+}
+
+.newsletter-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Poppins', sans-serif;
+    font-size: 13.5px;
+}
+
+.newsletter-btn {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 4px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, opacity 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+}
+
+.newsletter-btn:hover {
+    transform: translateX(4px);
+    color: #c084fc;
+}
+
+/* Newsletter Feedback Message */
+.newsletter-feedback {
+    font-size: 12px;
+    min-height: 0;
+    margin-bottom: 4px;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.newsletter-feedback:empty {
+    display: none;
+    margin-bottom: 0;
+}
+
+.newsletter-feedback.success {
+    color: #4ade80;
+}
+
+.newsletter-feedback.error {
+    color: #f87171;
+}
+
+/* Social Media Icons Row */
+.social-icons-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.social-circle {
+    width: 32px;
+    height: 32px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.22);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+}
+
+.social-circle i {
+    color: #000d3c;
+    font-size: 14px;
+    transition: color 0.25s ease;
+}
+
+.social-circle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(139, 61, 255, 0.35);
+}
+
+.social-circle:hover i {
+    color: #8b3dff;
+}
+
+/* Footer Bottom Divider Line and Copyright */
+.footer-bottom-wrapper {
+    width: 85%;
+    max-width: 1240px;
+    margin: 22px auto 0;
+    box-sizing: border-box;
+}
+
+.footer-divider {
+    border: none;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.14);
+    margin: 0 0 14px 0;
+    width: 100%;
+}
+
+.footer-copyright {
+    text-align: center;
+}
+
+.footer-copyright p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+}

@@ -1,0 +1,96 @@
+/* ========================================================
+   AgenticAim Animations & Scroll Reveals
+   ======================================================== */
+
+/* Page Load Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Hero Load Stagger */
+.animate-load-badge {
+    opacity: 0;
+    animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+.animate-load-heading {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+}
+
+.animate-load-desc {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+}
+
+.animate-load-actions {
+    opacity: 0;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+}
+
+.animate-load-showcase {
+    opacity: 0;
+    animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards;
+}
+
+/* Scroll-triggered reveal elements */
+.reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Team Card Staggered Delay */
+.team-card.reveal-on-scroll {
+    transition-delay: calc(var(--card-index, 0) * 0.1s);
+}
+
+/* Accessibility: Respect Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    .animate-load-badge,
+    .animate-load-heading,
+    .animate-load-desc,
+    .animate-load-actions,
+    .animate-load-showcase {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
