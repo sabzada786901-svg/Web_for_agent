@@ -95,27 +95,6 @@
                     }
                 }
 
-                // Netlify Forms Fallback for newsletter on deployed website
-                if (!successData && window.location.protocol.startsWith('http') && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-                    try {
-                        const netlifyFormData = new URLSearchParams();
-                        netlifyFormData.append('form-name', 'newsletter');
-                        netlifyFormData.append('email', value);
-
-                        const netlifyRes = await fetch('/', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: netlifyFormData.toString()
-                        });
-
-                        if (netlifyRes.ok) {
-                            successData = { success: true };
-                        }
-                    } catch (nfErr) {
-                        console.warn('Netlify newsletter fallback failed:', nfErr);
-                    }
-                }
-
                 if (successData) {
                     feedback.textContent = successData.message || 'Thank you for subscribing! You will receive our latest updates.';
                     feedback.className = 'newsletter-feedback success';
@@ -306,31 +285,6 @@
                     } catch (err) {
                         console.warn(`Attempt to send to ${endpoint} failed:`, err);
                         lastError = 'Unable to connect to the backend server. Please make sure the server is running on http://localhost:3000.';
-                    }
-                }
-
-                // Netlify Forms Fallback for deployed website
-                if (!successData && window.location.protocol.startsWith('http') && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-                    try {
-                        const netlifyFormData = new URLSearchParams();
-                        netlifyFormData.append('form-name', 'contact');
-                        netlifyFormData.append('name', name);
-                        netlifyFormData.append('email', email);
-                        netlifyFormData.append('subject', subject);
-                        netlifyFormData.append('message', message);
-                        if (website) netlifyFormData.append('website', website);
-
-                        const netlifyRes = await fetch('/', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: netlifyFormData.toString()
-                        });
-
-                        if (netlifyRes.ok) {
-                            successData = { success: true };
-                        }
-                    } catch (nfErr) {
-                        console.warn('Netlify form fallback attempt failed:', nfErr);
                     }
                 }
 
