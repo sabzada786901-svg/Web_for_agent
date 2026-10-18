@@ -68,6 +68,21 @@
                 closeSidebar();
             });
         });
+
+        // Smooth in-page scroll for download agent anchor links if on services page
+        document.querySelectorAll('a[href*="#download-agent"]').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                const target = document.getElementById('download-agent');
+                if (target) {
+                    e.preventDefault();
+                    closeSidebar();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    if (window.history && window.history.pushState) {
+                        window.history.pushState(null, '', '#download-agent');
+                    }
+                }
+            });
+        });
     }
 
     if (document.readyState === 'loading') {

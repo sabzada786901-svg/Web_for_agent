@@ -32,7 +32,7 @@
                 </nav>
 
                 <div class="header-actions">
-                    <a href="contact.html" class="btn-primary">Get Started</a>
+                    <a href="services.html#download-agent" class="btn-primary" aria-label="Download AgenticAim AI Agent"><i class="fa-solid fa-download"></i> Download</a>
                     <button id="hamburger-btn" class="hamburger-btn" aria-label="Toggle navigation drawer" aria-expanded="false">
                         <span></span>
                         <span></span>
@@ -63,7 +63,7 @@
             </ul>
 
             <div class="sidebar-cta">
-                <a href="contact.html" class="btn-primary">Get Started</a>
+                <a href="services.html#download-agent" class="btn-primary" aria-label="Download AgenticAim AI Agent"><i class="fa-solid fa-download"></i> Download</a>
             </div>
         </aside>
     `;

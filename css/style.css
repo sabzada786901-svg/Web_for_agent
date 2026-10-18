@@ -76,15 +76,16 @@ main {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 12px 26px;
+    gap: 7px;
+    padding: 9px 20px;
     border: none;
-    border-radius: 12px;
+    border-radius: 10px;
     background: var(--color-primary-gradient);
     color: #ffffff;
     font-family: var(--font-main);
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13.5px;
+    letter-spacing: 0.15px;
     text-decoration: none;
     cursor: pointer;
     transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
@@ -93,22 +94,23 @@ main {
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(145, 71, 245, 0.28);
+    box-shadow: 0 6px 18px rgba(145, 71, 245, 0.28);
 }
 
 .btn-secondary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 12px 24px;
+    gap: 7px;
+    padding: 9px 18px;
     border: 1.5px solid rgba(0, 13, 60, 0.15);
-    border-radius: 12px;
+    border-radius: 10px;
     background: #ffffff;
     color: var(--color-dark-navy);
     font-family: var(--font-main);
     font-weight: 600;
-    font-size: 15px;
+    font-size: 13.5px;
+    letter-spacing: 0.15px;
     text-decoration: none;
     cursor: pointer;
     transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
@@ -119,7 +121,7 @@ main {
     transform: translateY(-2px);
     border-color: var(--color-primary);
     color: var(--color-primary);
-    box-shadow: 0 6px 16px rgba(0, 13, 60, 0.08);
+    box-shadow: 0 5px 14px rgba(0, 13, 60, 0.08);
 }
 
 /* Section Container Utilities */

@@ -112,6 +112,14 @@
     gap: 16px;
 }
 
+.header-actions .btn-primary {
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 9px;
+    gap: 7px;
+}
+
 /* Hamburger Menu Button */
 .hamburger-btn {
     display: inline-flex;
